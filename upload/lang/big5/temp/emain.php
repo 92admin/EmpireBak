@@ -43,7 +43,13 @@ if(!defined('InEmpireBak'))
   <tr> 
     <td><table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
         <tr class="header"> 
-          <td height="25">瓣称(EmpireBak)舦羘</td>
+          <td height="25">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="50%" height="16"><strong><font color="#FFFFFF">瓣称(EmpireBak)舦羘</font></strong></td>
+                <td><div align="right"><strong><a href="http://ebak.phome.net" target="_blank"><font color="#FFFFFF">EBMA╰参﹛よ呼</font></a></strong></div></td>
+              </tr>
+            </table></td>
         </tr>
         <tr> 
           <td bgcolor="#FFFFFF"> <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1">
@@ -115,7 +121,7 @@ if(!defined('InEmpireBak'))
               </tr>
               <tr bgcolor="#FFFFFF"> 
                 <td height="25">祘セ&nbsp;&nbsp;: <a href="http://www.phome.net" target="_blank"><strong><font color="#07519A">EmpireBak</font></strong> 
-                  <font color="#FF9900"><strong>5.0</strong></font></a> <font color="#666666">[秨方]</font></td>
+                  <font color="#FF9900"><strong>5.1</strong></font></a> <font color="#666666">[秨方]</font></td>
                 <td height="25">家Α&nbsp;&nbsp;: 
                   <?=EGInfo_GetPHPSafemod()?'PHP笲︽家Α':'タ盽家Α'?>
                 </td>
@@ -155,7 +161,7 @@ if(!defined('InEmpireBak'))
   <tr> 
     <td height="32" valign="bottom"> 
       <div align="center">Powered by <a href="http://www.phome.net" target="_blank"><strong><font color="#07519A">EmpireBak</font></strong> 
-        <font color="#FF9900"><strong>5.0</strong></font></a></div></td>
+        <font color="#FF9900"><strong>5.1</strong></font></a></div></td>
   </tr>
 </table>
 </body>

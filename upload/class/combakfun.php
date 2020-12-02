@@ -121,11 +121,55 @@ function Ebak_ReturnUpdateMoreDbServer($add){
 	return $alldbserver;
 }
 
+//返回随机字符
+function Ebak_CkrndReturnVar($post){
+	global $ebak_set_ckrndvar,$ebak_set_ckrndval,$ebak_set_ckrndvaltwo,$ebak_set_ckrndvalthree,$ebak_set_ckrndvalfour,$set_username,$set_loginrnd,$phome_cookievarpre;
+	$changernd=0;
+	if($post['adminpassword'])
+	{
+		$changernd=1;
+	}
+	if($set_username<>$post['adminusername'])
+	{
+		$changernd=1;
+	}
+	if($set_loginrnd<>$post['adminloginrnd'])
+	{
+		$changernd=1;
+	}
+	if($phome_cookievarpre<>$post['ckvarpre']||$post['ckvarpre']=='ebak_')
+	{
+		$changernd=1;
+	}
+	if($changernd)
+	{
+		$r['ckrndvar']=strtolower(make_password_zm(12));
+		$r['ckrndval']=md5(md5(make_password(25)));
+		$r['ckrndvaltwo']=md5(md5(make_password(20)));
+		$r['ckrndvalthree']=md5(md5(make_password(18)));
+		$r['ckrndvalfour']=md5(md5(make_password(16)));
+	}
+	else
+	{
+		$r['ckrndvar']=$ebak_set_ckrndvar;
+		$r['ckrndval']=$ebak_set_ckrndval;
+		$r['ckrndvaltwo']=$ebak_set_ckrndvaltwo;
+		$r['ckrndvalthree']=$ebak_set_ckrndvalthree;
+		$r['ckrndvalfour']=$ebak_set_ckrndvalfour;
+	}
+	return $r;
+}
+
 //参数设置
 function Ebak_SetDb($add){
 	global $phome_db_password,$set_password,$phome_db_dbname,$link,$empire,$defphome_db_password;
 	//验证是否使用默认密码与默认验证随机码
 	Ebak_CheckIsDefPass($add);
+	$addrnd_r=Ebak_CkrndReturnVar($_POST);
+	if(strstr($add['ebmapath'],'/')||strstr($add['ebmapath'],"\\")||strstr($add['ebmapath'],':'))
+	{
+		printerror("NotPmaPath","history.go(-1)");
+	}
 	if(empty($add['outtime']))
 	{
 		$add['outtime']=60;
@@ -175,6 +219,10 @@ function Ebak_SetDb($add){
 	//修改密码
 	if($add['adminpassword'])
 	{
+		if($add['adminpassword']<>$add['adminrepassword'])
+		{
+			printerror("DiffAdminPassword","history.go(-1)");
+		}
 		$add['adminpassword']=md5(md5($add['adminpassword']));
 		$a="\$set_password='".addslashes($add['adminpassword'])."';\r\n";
 	}
@@ -217,6 +265,7 @@ if(!defined('InEmpireBak'))
 {
 	exit();
 }
+define('EmpireBakConfig',TRUE);
 
 //Database
 \$phome_db_dbtype='".addslashes($add['dbtype'])."';
@@ -236,6 +285,8 @@ if(!defined('InEmpireBak'))
 \$set_loginrnd='".addslashes($add['adminloginrnd'])."';
 \$set_outtime='".addslashes($add['outtime'])."';
 \$set_loginkey='".addslashes($add['loginkey'])."';
+\$ebak_set_keytime=".intval($add['keytime']).";
+\$ebak_set_ckuseragent='".addslashes($add['ckuseragent'])."';
 
 //COOKIE
 \$phome_cookiedomain='".addslashes($add['ckdomain'])."';
@@ -258,6 +309,18 @@ if(!defined('InEmpireBak'))
 \$ebak_set_moredbserver='".addslashes($moredbservers)."';
 \$ebak_set_hidedbs='".addslashes($add['shidedbs'])."';
 \$ebak_set_escapetype='".addslashes($add['sescapetype'])."';
+
+//EBMA
+\$ebak_ebma_open=".intval($add['ebmaopen']).";
+\$ebak_ebma_path='".addslashes($add['ebmapath'])."';
+\$ebak_ebma_cklogin=".intval($add['ebmacklogin']).";
+
+//SYS
+\$ebak_set_ckrndvar='".addslashes($addrnd_r['ckrndvar'])."';
+\$ebak_set_ckrndval='".addslashes($addrnd_r['ckrndval'])."';
+\$ebak_set_ckrndvaltwo='".addslashes($addrnd_r['ckrndvaltwo'])."';
+\$ebak_set_ckrndvalthree='".addslashes($addrnd_r['ckrndvalthree'])."';
+\$ebak_set_ckrndvalfour='".addslashes($addrnd_r['ckrndvalfour'])."';
 
 //------------ SYSTEM ------------
 HeaderIeChar();

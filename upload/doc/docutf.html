@@ -26,22 +26,23 @@
   <tr>
     <td height="25" bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="1" cellpadding="3">
         <tr> 
-          <td width="12%" height="30" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'"> 
+          <td width="10%" height="30" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'"> 
             <div align="center"><a href="#aboutebak">关于备份王</a></div></td>
-          <td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
+          <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
 <div align="center"><a href="#ebak">系统特性</a></div></td>
-          <td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
+          <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
 <div align="center"><a href="#hj">运行环境</a></div></td>
-          <td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
+          <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
 <div align="center"><a href="#setup">安装说明</a></div></td>
-          <td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
+          <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
 <div align="center"><a href="#usebak">使用说明</a></div></td>
-<td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
+<td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
 <div align="center"><a href="#question">常见问题</a></div></td>
-          <td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'"><div align="center"><a href="#mustdobak">注意事项</a></div></td>
-		  <td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
-<div align="center"><a href="http://bbs.phome.net/ListThread?forumid=27" target="_blank">问题提交</a></div></td>
-          <td width="11%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
+          <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'"><div align="center"><a href="#mustdobak">注意事项</a></div></td>
+		  <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'"><div align="center"><a href="#ebma" title="EmpireBak+phpMyAdmin+高安全"><font color="#ff0000"><strong>EBMA系统</strong></font></a></div></td>
+		  <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
+<div align="center"><a href="http://bbs.phome.net/ListThread?forumid=27" target="_blank">技术支持</a></div></td>
+          <td width="10%" onmouseover="this.style.backgroundColor='#DBEAF5'" onmouseout="this.style.backgroundColor='#ffffff'">
 <div align="center"><a href="http://www.phome.net/service/xuke.html" target="_blank">许可协议</a></div></td>
         </tr>
       </table></td>
@@ -116,7 +117,11 @@
                 <td width='100%' bgcolor='#FFFFFF' style='word-break:break-all;line-height: 20px'>备份文件均生成*.php文件，并且采用登录验证，只有登录的管理员才能进行数据恢复；<br>
                   备份目录、压缩目录可自定义；<br>
                   支持密码与认证码双重密码登录验证；<br>
-                  登录随机验证码加密验证；<br>
+                  登录支持验证码验证，采用过期时间+加密字符验证，有效防止暴力提交表单；<br>
+                  第一重安全验证：登录随机验证码加密验证；<br>
+                  第二重安全验证：随机变量名+随机验证字符，无规律可寻，并且后台无法查看，必须进入FTP查看配置文件内容，高安全性；<br>
+                  第三重通用性安全验证：给整合程序增加第三重验证，验证字符由系统随机生成，并且后台无法查看，必须进入FTP查看配置文件内容，高安全性；<br>
+                  第四重安全验证：支持浏览器USER-AGENT验证功能，只有包含指定信息的浏览器才可以访问后台，也就是说可以指定某一台机器才能访问后台；<br>
                   安装目录可任意自定义；<br>
                   管理员登录验证COOKIE变量前缀后台直接设置。</td>
               </tr>
@@ -432,6 +437,18 @@
               <tr>
                 <td height="25"><font color="#333333">&nbsp;&nbsp;答：可以参考这个教程：<a href="http://bbs.phome.net/showthread-13-45475-0.html" target="_blank">http://bbs.phome.net/showthread-13-45475-0.html</a></font></td>
               </tr>
+              <tr>
+                <td height="25"><strong>21、设置错访问的UserAgent信息，怎么办？</strong></td>
+              </tr>
+              <tr>
+                <td height="25"><font color="#333333">&nbsp;&nbsp;解决方法：修改class/config.php文件，内容找到“$ebak_set_ckuseragent”，把它的值设置为空。</font></td>
+              </tr>
+              <tr>
+                <td height="25"><strong>22、不小心把验证码过期时间设置为0秒，无法登录，怎么办？</strong></td>
+              </tr>
+              <tr>
+                <td height="25"><font color="#333333">&nbsp;&nbsp;解决方法：修改class/config.php文件，内容找到“$ebak_set_keytime”，把它的值改为对应的秒数。</font></td>
+              </tr>
               
               
               <tr> 
@@ -460,6 +477,96 @@
         </tr>
       </table>    </td>
   </tr>
+  
+  <tr>
+    <td height="36" bgcolor="#FFFFFF"><table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" id="ebma">
+      <tr>
+        <td height="23" bgcolor="#DBEAF5"><strong><font color="#0000FF">七、EBMA系统简介</font></strong></td>
+      </tr>
+      <tr>
+        <td height="22">“EmpireBak+phpMyAdmin+高安全”整合包就是EBMA系统、开源免费。是一款更安全的MYSQL数据库管理和备份系统。字母取自“Empire”的E、“Bak”的B、“My”的M、“Admin”的A。</td>
+      </tr>
+
+    </table>
+      <br>
+      <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1">
+      <tr>
+        <td height="23" bgcolor="#DBEAF5"><strong><font color="#0000FF">八、EBMA系统常见问题</font></strong></td>
+      </tr>
+      <tr>
+        <td height="22"><table width="100%" border="0" cellspacing="1" cellpadding="3">
+          <tr>
+            <td height="25"><strong>1、EBMA系统是什么？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：“EmpireBak+phpMyAdmin+高安全”整合包就是EBMA系统、开源免费。字母取自“Empire”的E、“Bak”的B、“My”的M、“Admin”的A。</font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>2、为什么要使用EBMA系统的phpMyAdmin，而不使用原生的phpMyAdmin？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：因为EBMA系统具有高安全性。而众所周知原生的phpMyAdmin本身是不安全的，必须非常小心谨慎的隐藏目录，是服务器的安全隐患之一(这也是帝国官方开发EBMA系统的初衷)。<br>
+使用EBMA系统安全性更高，即使目录被知道，也不会有安全问题。</font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>3、EBMA系统优势有哪些？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：(1)、高安全性；<br>
+              (2)、帝国备份王备份大数据稳定高效；<br>
+              (3)、高安全的phpMyAdmin，管理更放心；<br>
+              (4)、支持多MYSQL服务器一起管理与备份；<br>
+              (5)、不同MYSQL版本平滑转换，系统自动识别，兼容性好；<br>
+              (6)、自带探针功能，方便检测服务器运行环境状态；<br>
+              (7)、可以按需开启phpMyAdmin，使用时开启，不使用时关闭，后台直接在线设置；<br>
+              (8)、安装使用方便：全部WEB在线配置参数，无需手动修改文件。<br>
+              管理和备份MYSQL用一套EBMA系统就够了，安全又好用。</font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>4、EBMA系统的phpMyAdmin和原生的phpMyAdmin代码有什么区别？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：代码一样，唯一的区别：所有php文件都加上了帝国备份王安全验证代码。</font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>5、帝国官方开发EBMA系统的初衷是什么？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：让大家使用上更安全的phpMyAdmin来管理MYSQL，让网站更安全。</font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>6、已经安装过帝国备份王，如何再安装EBMA的phpMyAdmin？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：可以下载EBMA系统安装包，然后把upload目录里的“eapi”目录上传到帝国备份王目录即可安装成功。(说明：需要使用帝国备份王5.1及以上版本。)<br>
+EBMA系统下载地址：<a href="http://ebak.phome.net" target="_blank">http://ebak.phome.net</a></font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>7、如何修改EBMA系统的phpMyAdmin目录名？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：先重命名“/eapi/phpmyadmin”目录名(phpmyadmin目录可任意重命名，eapi目录不能修改)，然后登录帝国备份王后台&gt;“全局参数设置”&gt;“EBMA系统”：修改“phpmyadmin目录名”即可。</font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>8、EBMA系统的phpMyAdmin可以随时关闭吗？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：可以要使用时开启，不使用时关闭。开启/关闭方法：登录帝国备份王后台&gt;“全局参数设置”&gt;“EBMA系统”：设置“是否开启phpmyadmin”。</font></td>
+          </tr>
+          <tr>
+            <td height="25"><strong>9、使用时有什么注意事项？</strong></td>
+          </tr>
+          <tr>
+            <td height="25"><font color="#333333">&nbsp;&nbsp;答：使用phpmyadmin更改数据表过程中一定不要切换服务器。</font></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td height="22">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  
   <tr> 
     <td height="36" bgcolor="#FFFFFF"> 
       <div align="center">Powered By <a href="http://www.phome.net" target="_blank"><strong>EmpireBak</strong></a></div></td>

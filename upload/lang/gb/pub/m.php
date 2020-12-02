@@ -59,6 +59,8 @@ $message_r=Array(
 	'CheckNotDb'=>'数据库名不存在',
 	'CheckErrorDbVer'=>'MYSQL版本选择不正确(检测到的MYSQL版本为: '.$GLOBALS['phome_db_ver'].')',
 	'CheckConnectDbSuccess'=>'参数正确,链接数据库成功(MYSQL版本: '.$GLOBALS['phome_db_ver'].')',
+	'DiffAdminPassword'=>'输入的两次管理员密码不一致',
+	'NotPmaPath'=>'设置的 PMA 目录格式不对',
 	'NotToUseDefPass'=>'请修改默认的管理密码和验证随机码 (管理员设置)'
 );
 ?>

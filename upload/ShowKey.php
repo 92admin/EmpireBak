@@ -1,9 +1,14 @@
 <?php
 require('class/connect.php');
+if($set_loginkey)
+{
+	exit();
+}
+
 //------------------------------------------------------取得随机数
 function domake_password($pw_length){
-	$low_ascii_bound=48;
-	$upper_ascii_bound=57;
+	$low_ascii_bound=50;
+	$upper_ascii_bound=90;
 	$notuse=array(58,59,60,61,62,63,64,73,79,91,92,93,94,95,96,108,111);
 	while($i<$pw_length)
 	{
@@ -24,7 +29,7 @@ function domake_password($pw_length){
 //------------------------------------------------------显示验证码
 function ShowKey(){
 	$key=strtolower(domake_password(4));
-	$set=esetcookie("checkkey",$key,0,1);
+	Ebak_SetShowKey('checkkey',$key);
 	//是否支持gd库
 	if(function_exists("imagejpeg"))
 	{
@@ -72,7 +77,7 @@ function ShowKey(){
 	}
 	else
 	{
-		$set=esetcookie("checkkey","ebak",0,1);
+		Ebak_SetShowKey('checkkey','ebak');
 		@include("class/functions.php");
 		echo ReadFiletext("images/ebak.jpg");
 	}

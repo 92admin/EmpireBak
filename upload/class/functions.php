@@ -15,6 +15,7 @@ function islogin($uname='',$urnd=''){
 		printerror("NotLogin","index.php");
 	}
 	Ebak_CHCookieRnd($username,$rnd);
+	Ebak_CkrndCheckLogin();
 	$time=time();
 	if($time-getcvar('baklogintime')>$set_outtime*60)
 	{
@@ -30,7 +31,7 @@ function islogin($uname='',$urnd=''){
 //设置COOKIE认证
 function Ebak_SCookieRnd($username,$rnd){
 	global $set_loginrnd;
-	$ckpass=md5(md5($rnd.$set_loginrnd.'!e,b*a-k5.0'.Ebak_ReturnChLoginPwStr()).'-'.$rnd.'-'.$username.'-');
+	$ckpass=md5(md5($rnd.$set_loginrnd.'!e,b*a-k5.1'.Ebak_ReturnChLoginPwStr()).'-'.$rnd.'-'.$username.'-');
 	esetcookie("loginebakckpass",$ckpass,0);
 }
 
@@ -41,7 +42,7 @@ function Ebak_CHCookieRnd($username,$rnd){
 	{
 		printerror("NotLogin","index.php");
 	}
-	$ckpass=md5(md5($rnd.$set_loginrnd.'!e,b*a-k5.0'.Ebak_ReturnChLoginPwStr()).'-'.$rnd.'-'.$username.'-');
+	$ckpass=md5(md5($rnd.$set_loginrnd.'!e,b*a-k5.1'.Ebak_ReturnChLoginPwStr()).'-'.$rnd.'-'.$username.'-');
 	if('dg'.$ckpass<>'dg'.getcvar('loginebakckpass'))
 	{
 		printerror("NotLogin","index.php");
@@ -55,12 +56,47 @@ function Ebak_ReturnChLoginPwStr(){
 	return $chstr;
 }
 
+//登录设置变量(二)
+function Ebak_CkrndSetLogin(){
+	global $ebak_set_ckrndvar,$ebak_set_ckrndval;
+	esetcookie($ebak_set_ckrndvar,$ebak_set_ckrndval,0);
+}
+
+//登录验证变量(二)
+function Ebak_CkrndCheckLogin(){
+	global $ebak_set_ckrndvar,$ebak_set_ckrndval;
+	if(!getcvar($ebak_set_ckrndvar))
+	{
+		printerror("NotLogin","index.php");
+	}
+	if('dg'.getcvar($ebak_set_ckrndvar)<>'dg'.$ebak_set_ckrndval)
+	{
+		printerror("NotLogin","index.php");
+	}
+	if(!$_COOKIE['qebak_efourcheck'])
+	{
+		printerror("NotLogin","index.php");
+	}
+	if('dg'.Ebak_ReturnFourCheckRnd()<>'dg'.$_COOKIE['qebak_efourcheck'])
+	{
+		printerror("NotLogin","index.php");
+	}
+}
+
+//删除登录验证变量(二)
+function Ebak_DelCkrndLogin(){
+	global $ebak_set_ckrndvar,$ebak_set_ckrndval;
+	esetcookie($ebak_set_ckrndvar,'',0);
+}
+
 //退出系统
 function LoginOut(){
 	esetcookie("bakusername","",0);
 	esetcookie("bakrnd","",0);
 	esetcookie("loginebakckpass","",0);
 	esetcookie("baklogintime","",0);
+	esetcookie('efourcheck','',0,1);
+	Ebak_DelCkrndLogin();
 	printerror("ExitSuccess","index.php");
 }
 
@@ -71,13 +107,14 @@ function login($lusername,$lpassword,$key,$lifetime=0){
 	{
 		printerror("EmptyLoginUser","index.php");
 	}
+	if(strlen($lusername)>30||strlen($lpassword)>30)
+	{
+		printerror("EmptyLoginUser","index.php");
+	}
 	//验证码
 	if(!$set_loginkey)
 	{
-		if($key<>getcvar('checkkey',1)||empty($key))
-		{
-			printerror("FailLoginKey","index.php");
-		}
+		Ebak_CheckShowKey('checkkey',$key);
 	}
 	if('dg'.md5($lusername)<>'dg'.md5($set_username)||'dg'.md5(md5($lpassword))<>'dg'.$set_password)
 	{
@@ -94,6 +131,9 @@ function login($lusername,$lpassword,$key,$lifetime=0){
 	$s2=esetcookie("bakrnd",$rnd,0);
 	$s3=esetcookie("baklogintime",$logintime,0);
 	Ebak_SCookieRnd($lusername,$rnd);
+	Ebak_CkrndSetLogin();
+	Ebak_EmptyShowKey('checkkey');
+	esetcookie('efourcheck',Ebak_ReturnFourCheckRnd(),0,1);
 	if(!$s1||!$s2)
 	{
 		printerror("NotOpenCookie","index.php");
@@ -111,6 +151,11 @@ function printerror($error="",$gotourl="",$ecms=0){
 	elseif($editor==2){$a="../../";}
 	elseif($editor==3){$a="../../../";}
 	else{$a="";}
+	if(defined('InEBMA'))
+	{
+		$ecms=9;
+		$gotourl=Ebak_eReturnDomain();
+	}
 	if(strstr($gotourl,"(")||empty($gotourl))
 	{
 		$gotourl_js="history.go(-1)";
@@ -122,13 +167,13 @@ function printerror($error="",$gotourl="",$ecms=0){
 	{$error="DbError";}
 	if($ecms==0)
 	{
-		@include $a.LoadLang("m.php");
+		@include EBAK_PATH.LoadLang("m.php");
 		$error=$message_r[$error];
-		@include $a.LoadAdminTemp('message.php');
+		@include EBAK_PATH.LoadAdminTemp('message.php');
 	}
 	elseif($ecms==9)//弹出对话框
 	{
-		@include $a.LoadLang("m.php");
+		@include EBAK_PATH.LoadLang("m.php");
 		$error=$message_r[$error];
 		echo"<script>alert('".$error."');".$gotourl_js."</script>";
 	}
@@ -365,7 +410,7 @@ function Ebak_Dozip($path){
 	{
 		printerror("DelPathNotExists","history.go(-1)",9);
 	}
-	$zipname=$path.".zip";
+	$zipname=$path.make_password(10).".zip";
 	ZipFile($path,$zipname);
 	echo"<script>self.location.href='DownZip.php?f=$zipname&p=$path';</script>";
 }
@@ -1120,7 +1165,7 @@ function Ebak_DoCreateTable($sql,$mysqlver,$dbcharset){
 function Ebak_ReturnVer(){
 	$string="
 /*
-		SoftName : EmpireBak Version 5.0
+		SoftName : EmpireBak Version 5.1
 		Author   : wm_chief
 		Copyright: Powered by www.phome.net
 */
@@ -1377,6 +1422,17 @@ function Ebak_ChangeDbServer($add){
 	}
 	echo"<script>parent.location.href='$add[from]';</script>";
 	exit();
+}
+
+//PmaUrl
+function Ebak_GetPmaUrl(){
+	global $ebak_ebma_path;
+	$selfpage=$_SERVER['PHP_SELF'];
+	$exp='/eapi/';
+	$urlr=explode($exp,$selfpage);
+	$ebakpath=$urlr[0];
+	$pmaurl=Ebak_eReturnDomain().$ebakpath.$exp.$ebak_ebma_path.'/';
+	return $pmaurl;
 }
 
 ?>

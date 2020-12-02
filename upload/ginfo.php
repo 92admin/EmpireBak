@@ -1,5 +1,10 @@
 <?php
-error_reporting(0);
+require('class/connect.php');
+require('class/functions.php');
+$lur=islogin();
+$loginin=$lur['username'];
+$rnd=$lur['rnd'];
+
 @header('Content-Type: text/html; charset=gb2312');
 @include('EmpireBak_version.php');
 $pd="?product=empirebak&doupdate=".EmpireBak_UPDATE."&ver=".EmpireBak_VERSION."&lasttime=".EmpireBak_LASTTIME."&domain=".$_SERVER['HTTP_HOST']."&ip=".$_SERVER['REMOTE_ADDR'];

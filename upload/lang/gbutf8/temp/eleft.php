@@ -108,6 +108,22 @@ if($ebak_set_moredbserver)
     <td height="27" bgcolor="#FFFFFF" onmouseout="this.style.backgroundColor='#ffffff'" onmouseover="this.style.backgroundColor='#DBEAF5'"><div align="center"><a href="eginfo.php" target="ebakmain">帝国PHP探针</a></div></td>
   </tr>
 </table>
+<?php
+if($ebak_ebma_path&&file_exists('eapi/'.$ebak_ebma_path))
+{
+?>
+<br>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
+  <tr class="header">
+    <td height="27" title="EmpireBak+phpMyAdmin+高安全"><div align="center">EBMA系统</div></td>
+  </tr>
+  <tr>
+    <td height="27" bgcolor="#FFFFFF" onmouseout="this.style.backgroundColor='#ffffff'" onmouseover="this.style.backgroundColor='#DBEAF5'"><div align="center"><a href="goebma.php" title="用EBMA管理和备份MYSQL更安全。" target="ebakmain">使用phpMyAdmin</a></div></td>
+  </tr>
+</table>
+<?php
+}
+?>
 <br>
 <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
   <tr class="header">

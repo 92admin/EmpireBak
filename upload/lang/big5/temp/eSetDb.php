@@ -31,12 +31,14 @@ function ChangeSet(cset){
 		//setlang.style.display="none";
 		setother.style.display="none";
 		setmdbs.style.display="none";
+		setebma.style.display="none";
 
 		setdbbg.style.backgroundColor="#ffffff";
 		setuserbg.style.backgroundColor="#DBEAF5";
 		setckbg.style.backgroundColor="#ffffff";
 		setotherbg.style.backgroundColor="#ffffff";
 		setmdbsbg.style.backgroundColor="#ffffff";
+		setebmabg.style.backgroundColor="#ffffff";
 	}
 	else if(cset=="setck")
 	{
@@ -46,12 +48,14 @@ function ChangeSet(cset){
 		//setlang.style.display="none";
 		setother.style.display="none";
 		setmdbs.style.display="none";
+		setebma.style.display="none";
 
 		setdbbg.style.backgroundColor="#ffffff";
 		setuserbg.style.backgroundColor="#ffffff";
 		setckbg.style.backgroundColor="#DBEAF5";
 		setotherbg.style.backgroundColor="#ffffff";
 		setmdbsbg.style.backgroundColor="#ffffff";
+		setebmabg.style.backgroundColor="#ffffff";
 	}
 	else if(cset=="setlang")
 	{
@@ -61,12 +65,14 @@ function ChangeSet(cset){
 		//setlang.style.display="none";
 		setother.style.display="none";
 		setmdbs.style.display="none";
+		setebma.style.display="none";
 
 		setdbbg.style.backgroundColor="#ffffff";
 		setuserbg.style.backgroundColor="#ffffff";
 		setckbg.style.backgroundColor="#ffffff";
 		setotherbg.style.backgroundColor="#ffffff";
 		setmdbsbg.style.backgroundColor="#ffffff";
+		setebmabg.style.backgroundColor="#ffffff";
 	}
 	else if(cset=="setother")
 	{
@@ -76,12 +82,14 @@ function ChangeSet(cset){
 		//setlang.style.display="none";
 		setother.style.display="";
 		setmdbs.style.display="none";
+		setebma.style.display="none";
 
 		setdbbg.style.backgroundColor="#ffffff";
 		setuserbg.style.backgroundColor="#ffffff";
 		setckbg.style.backgroundColor="#ffffff";
 		setotherbg.style.backgroundColor="#DBEAF5";
 		setmdbsbg.style.backgroundColor="#ffffff";
+		setebmabg.style.backgroundColor="#ffffff";
 	}
 	else if(cset=="setmdbs")
 	{
@@ -91,12 +99,31 @@ function ChangeSet(cset){
 		//setlang.style.display="none";
 		setother.style.display="none";
 		setmdbs.style.display="";
+		setebma.style.display="none";
 
 		setdbbg.style.backgroundColor="#ffffff";
 		setuserbg.style.backgroundColor="#ffffff";
 		setckbg.style.backgroundColor="#ffffff";
 		setotherbg.style.backgroundColor="#ffffff";
 		setmdbsbg.style.backgroundColor="#DBEAF5";
+		setebmabg.style.backgroundColor="#ffffff";
+	}
+	else if(cset=="setebma")
+	{
+		setdb.style.display="none";
+		setuser.style.display="none";
+		setck.style.display="none";
+		//setlang.style.display="none";
+		setother.style.display="none";
+		setmdbs.style.display="none";
+		setebma.style.display="";
+
+		setdbbg.style.backgroundColor="#ffffff";
+		setuserbg.style.backgroundColor="#ffffff";
+		setckbg.style.backgroundColor="#ffffff";
+		setotherbg.style.backgroundColor="#ffffff";
+		setmdbsbg.style.backgroundColor="#ffffff";
+		setebmabg.style.backgroundColor="#DBEAF5";
 	}
 	else
 	{
@@ -106,12 +133,14 @@ function ChangeSet(cset){
 		//setlang.style.display="none";
 		setother.style.display="none";
 		setmdbs.style.display="none";
+		setebma.style.display="none";
 
 		setdbbg.style.backgroundColor="#DBEAF5";
 		setuserbg.style.backgroundColor="#ffffff";
 		setckbg.style.backgroundColor="#ffffff";
 		setotherbg.style.backgroundColor="#ffffff";
 		setmdbsbg.style.backgroundColor="#ffffff";
+		setebmabg.style.backgroundColor="#ffffff";
 	}
 }
 
@@ -200,6 +229,11 @@ function EbakCheckIsDefPass(obj){
 //驗證表單
 function EbakCheckForm(obj){
 	var isok;
+	if(obj.adminpassword.value!=obj.adminrepassword.value)
+	{
+		alert('輸入的兩次管理員密碼不一致 (管理員設置)');
+		return false;
+	}
 	isok=EbakCheckIsDefPass(obj);
 	return isok;
 }
@@ -216,15 +250,17 @@ function EbakCheckForm(obj){
 <br>
 <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
   <tr bgcolor="#FFFFFF"> 
-    <td width="20%" height="23" id="setdbbg" onmouseover="ChangeSet('setdb');" bgcolor="#DBEAF5"> 
+    <td width="18%" height="23" id="setdbbg" onmouseover="ChangeSet('setdb');" bgcolor="#DBEAF5"> 
       <div align="center"><strong><a href="#ebak">數據庫設置</a></strong></div></td>
-    <td width="20%" id="setuserbg" onmouseover="ChangeSet('setuser');"> 
+    <td width="18%" id="setuserbg" onmouseover="ChangeSet('setuser');"> 
       <div align="center"><strong><a href="#ebak">管理員設置</a></strong></div></td>
-    <td width="20%" id="setckbg" onmouseover="ChangeSet('setck');"> 
+    <td width="16%" id="setckbg" onmouseover="ChangeSet('setck');"> 
       <div align="center"><strong><a href="#ebak">COOKIE設置</a></strong></div></td>
-	<td width="20%" id="setmdbsbg" onmouseover="ChangeSet('setmdbs');"> 
+	<td width="16%" id="setmdbsbg" onmouseover="ChangeSet('setmdbs');"> 
       <div align="center"><strong><a href="#ebak">多服務器設置</a></strong></div></td>
-    <td width="20%" id="setotherbg" onmouseover="ChangeSet('setother');"> 
+	<td width="16%" id="setebmabg" onmouseover="ChangeSet('setebma');"<?=$haveebma==0?' style="display:none"':''?>> 
+      <div align="center"><strong><a href="#ebak">EBMA設置</a></strong></div></td>
+    <td width="16%" id="setotherbg" onmouseover="ChangeSet('setother');"> 
       <div align="center"><strong><a href="#ebak">其它設置</a></strong></div></td>
   </tr>
 </table>
@@ -323,24 +359,29 @@ function EbakCheckForm(obj){
     <tr> 
       <td width="24%" height="25" bgcolor="#FFFFFF">用戶名</td>
       <td height="25" bgcolor="#FFFFFF"> <input name="adminusername" type="text" id="adminusername" value="<?=$set_username?>">
-        <font color="#666666">(修改後要重新登錄)</font></td>
+        <font color="#666666">(修改後要重新登錄，8~30個字符)</font></td>
     </tr>
     <tr> 
       <td height="25" bgcolor="#FFFFFF">密碼</td>
       <td height="25" bgcolor="#FFFFFF"> <input name="adminpassword" type="password" id="adminpassword"> 
-        <font color="#666666">(不想修改請留空, 修改後要重新登錄)</font></td>
+        <font color="#666666">(不想修改請留空, 修改後要重新登錄，8~30個字符，區分大小寫)</font></td>
+    </tr>
+	<tr> 
+      <td height="25" bgcolor="#FFFFFF">重複密碼</td>
+      <td height="25" bgcolor="#FFFFFF"> <input name="adminrepassword" type="password" id="adminrepassword"> 
+        <font color="#666666">(不想修改請留空)</font></td>
     </tr>
     <tr>
       <td height="25" bgcolor="#FFFFFF">認證碼</td>
       <td height="25" bgcolor="#FFFFFF"><input name="adminloginauth" type="password" id="adminloginauth" value="<?=$set_loginauth?>">
-        <font color="#666666">(二級密碼,空為不設置)</font></td>
+        <font color="#666666">(二級密碼,空為不設置，不限字符數)</font></td>
     </tr>
     <tr>
       <td height="25" bgcolor="#FFFFFF">驗證隨機碼</td>
       <td height="25" bgcolor="#FFFFFF"><input name="adminloginrnd" type="text" id="adminloginrnd" value="<?=$set_loginrnd?>">
         <font color="#666666">
         <input type="button" name="Submit3" value="隨機" onclick="document.form1.adminloginrnd.value='<?=$loginauthrnd?>';">
-        (修改後要重新登錄)</font></td>
+        (修改後要重新登錄，不限字符數)</font></td>
     </tr>
     <tr> 
       <td height="25" bgcolor="#FFFFFF">超時限制</td>
@@ -353,6 +394,18 @@ function EbakCheckForm(obj){
         是 
         <input type="radio" name="loginkey" value="1"<?=$set_loginkey==1?' checked':''?>>
         否</td>
+    </tr>
+    <tr>
+      <td height="25" bgcolor="#FFFFFF">驗證碼過期時間</td>
+      <td height="25" bgcolor="#FFFFFF"><input name="keytime" type="text" id="keytime" value="<?=$ebak_set_keytime?>">
+        秒 <font color="#666666">(時間越短效果越好)</font></td>
+    </tr>
+	<tr>
+      <td rowspan="2" valign="top" bgcolor="#FFFFFF">後台訪問的UserAgent包含</td>
+      <td height="25" bgcolor="#FFFFFF"><input name="ckuseragent" type="text" id="ckuseragent" value="<?=$ebak_set_ckuseragent?>" size="50"></td>
+    </tr>
+	<tr>
+	  <td height="25" bgcolor="#FFFFFF"><font color="#666666">(區分大小寫，多個用「||」半角雙豎線隔開，設置後UserAgent信息必須同時包含這些字符才能訪問後台)</font></td>
     </tr>
   </table>
 	
@@ -501,6 +554,30 @@ if($ebak_set_moredbserver)
         <option value="2"<?=$ebak_set_escapetype==2?' selected':''?>>mysql_real_escape_string()</option>
       </select>
         <font color="#666666">(通常按默認即可)</font></td>
+    </tr>
+  </table>		
+	
+  <table width="100%" border="0" cellpadding="3" cellspacing="1" class="tableborder" id="setebma" style="display:none">
+	<tr class="header">
+	  <td height="25" colspan="2"><strong>EBMA設置 </strong>(<strong>E</strong>mpire<strong>B</strong>ak+php<strong>M</strong>y<strong>A</strong>dmin)</td>
+    </tr>
+	<tr>
+	  <td width="24%" height="25" bgcolor="#FFFFFF">是否開啟phpmyadmin</td>
+	  <td height="25" bgcolor="#FFFFFF"><input type="radio" name="ebmaopen" value="1"<?=$ebak_ebma_open==1?' checked':''?>>開啟
+        <input type="radio" name="ebmaopen" value="0"<?=$ebak_ebma_open==0?' checked':''?>>關閉
+      <font color="#666666">(可以要使用時開啟，不使用時關閉)</font></td>
+    </tr>
+	<tr>
+	  <td height="25" bgcolor="#FFFFFF">phpmyadmin目錄</td>
+	  <td height="25" bgcolor="#FFFFFF">eapi/
+      <input name="ebmapath" type="text" id="ebmapath" value="<?=$ebak_ebma_path?>">
+      <font color="#666666">(修改目錄：先重命名eapi/phpmyadmin目錄，然後再修改這裡)</font></td>
+    </tr>
+	<tr>
+	  <td height="25" bgcolor="#FFFFFF">開啟phpmyadmin二次驗證</td>
+	  <td height="25" bgcolor="#FFFFFF"><input type="radio" name="ebmacklogin" value="0"<?=$ebak_ebma_cklogin==0?' checked':''?>>開啟
+          <input type="radio" name="ebmacklogin" value="1"<?=$ebak_ebma_cklogin==1?' checked':''?>>關閉 <font color="#666666">(開啟後，進入phpmyadmin需要再次登錄數據庫，即：帝國備份王驗證+PMA本身雙重驗證)</font>	  
+	  </td>
     </tr>
   </table>
 	<table width="100%" border="0" cellpadding="3" cellspacing="1" class="tableborder">

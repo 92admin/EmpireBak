@@ -29,11 +29,23 @@ $phome_db_char='';
 $ebak_set_moredbserver='';
 $ebak_set_selfserver_r=array();
 $ebak_set_selfserverid=0;
+$fun_r=array();
+$message_r=array();
+$ebak_ebma_open=0;
+$ebak_ebma_path='';
+$ebak_ebma_cklogin=0;
 
 Ebak_CheckCloseEbakSys();
 
 require_once EBAK_PATH.'lang/dbchar.php';
 require_once EBAK_PATH.'class/config.php';
+
+if(!defined('EmpireBakConfig'))
+{
+	exit();
+}
+
+Ebak_CheckUserAgent();
 
 //超时设置
 if($php_outtime)
@@ -54,6 +66,14 @@ $defbaktbpre=$baktbpre;
 $defphome_db_char=$phome_db_char;
 
 //MysqlType
+if(empty($phome_db_dbtype))
+{
+	if(!function_exists('mysql_connect'))
+	{
+		$phome_db_dbtype='mysqli';
+	}
+}
+
 if($phome_db_dbtype=='mysqli')
 {
 	include(EBAK_PATH.'class/db_sqli.php');
@@ -78,7 +98,7 @@ function eDbConnectError(){
 		elseif($editor==2){$a="../../";}
 		elseif($editor==3){$a="../../../";}
 		else{$a="";}
-		@include_once $a.LoadLang('f.php');
+		@include_once EBAK_PATH.LoadLang('f.php');
 	}
 	echo $fun_r['ConntConnectDb'];
 	exit();
@@ -332,5 +352,95 @@ function Ebak_CheckCloseEbakSys(){
 		echo'<font color=red><b>EmpireBak is close!</b></font> You can delete or rename <b>/closesys/empirebak.off</b> to open.';
 		exit();
 	}
+}
+
+//验证agent信息
+function Ebak_CheckUserAgent(){
+	global $ebak_set_ckuseragent;
+	if(empty($ebak_set_ckuseragent))
+	{
+		return '';
+	}
+	$userinfo=$_SERVER['HTTP_USER_AGENT'];
+	$cr=explode('||',$ebak_set_ckuseragent);
+	$count=count($cr);
+	for($i=0;$i<$count;$i++)
+	{
+		if(empty($cr[$i]))
+		{
+			continue;
+		}
+		if(!strstr($userinfo,$cr[$i]))
+		{
+			//echo'Userinfo Error';
+			exit();
+		}
+	}
+}
+
+//设置验证码
+function Ebak_SetShowKey($varname,$val){
+	global $ebak_set_ckrndvalthree;
+	$time=time();
+	$checkpass=md5($varname.md5($val.'-Empire-CMS-'.$time.'!-!'.$ebak_set_ckrndvalthree).$ebak_set_ckrndvalthree.'#p-H-o-m#e');
+	$key=$time.','.$checkpass.',EmpireBak';
+	esetcookie($varname,$key,0,1);
+}
+
+//检查验证码
+function Ebak_CheckShowKey($varname,$postval){
+	global $ebak_set_ckrndvalthree,$ebak_set_keytime;
+	$r=explode(',',getcvar($varname,1));
+	$cktime=(int)$r[0];
+	$pass=$r[1];
+	$val=$r[2];
+	$time=time();
+	if($cktime>$time||$time-$cktime>$ebak_set_keytime)
+	{
+		printerror('FailLoginKey',$_SERVER['HTTP_REFERER']);
+	}
+	if(empty($postval))
+	{
+		printerror('FailLoginKey',$_SERVER['HTTP_REFERER']);
+	}
+	$checkpass=md5($varname.md5($postval.'-Empire-CMS-'.$cktime.'!-!'.$ebak_set_ckrndvalthree).$ebak_set_ckrndvalthree.'#p-H-o-m#e');
+	if($checkpass<>$pass)
+	{
+		printerror('FailLoginKey',$_SERVER['HTTP_REFERER']);
+	}
+}
+
+//清空验证码
+function Ebak_EmptyShowKey($varname){
+	esetcookie($varname,'',0,1);
+}
+
+//返回当前域名
+function Ebak_eReturnDomain(){
+	$domain=$_SERVER['HTTP_HOST'];
+	if(empty($domain))
+	{
+		return '';
+	}
+	return (Ebak_eCheckUseHttps()==1?'https://':'http://').$domain;
+}
+
+//验证是否使用https
+function Ebak_eCheckUseHttps(){
+	if($_SERVER['SERVER_PORT']==443)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+//返回第四随机码
+function Ebak_ReturnFourCheckRnd(){
+	global $set_username,$ebak_set_ckrndvalfour;
+	$fourcheck=md5($ebak_set_ckrndvalfour.'!E-b-A-k!'.$set_username);
+	return $fourcheck;
 }
 ?>

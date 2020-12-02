@@ -19,6 +19,11 @@ else
 	$filechmod1="";
 	$filechmod0=" checked";
 }
+$haveebma=0;
+if(file_exists('eapi/ebma.php'))
+{
+	$haveebma=1;
+}
 $loginauthrnd=make_password(30);
 require LoadAdminTemp('eSetDb.php');
 ?>

@@ -59,6 +59,8 @@ $message_r=Array(
 	'CheckNotDb'=>'數據庫名不存在',
 	'CheckErrorDbVer'=>'MYSQL版本選擇不正確(檢測到的MYSQL版本為: '.$GLOBALS['phome_db_ver'].')',
 	'CheckConnectDbSuccess'=>'參數正確,鏈接數據庫完畢(MYSQL版本: '.$GLOBALS['phome_db_ver'].')',
+	'DiffAdminPassword'=>'輸入的兩次管理員密碼不一致',
+	'NotPmaPath'=>'設置的 PMA 目錄格式不對',
 	'NotToUseDefPass'=>'請修改默認的管理密碼和驗證隨機碼 (管理員設置)'
 );
 ?>

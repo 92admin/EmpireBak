@@ -120,6 +120,11 @@ function check()
   </tr>
 </table>
 <br>
+<table id="checkmaxinput" width="100%" border="0" cellpadding="3" cellspacing="1" class="tableborder" style="display:none">
+	<tr>
+      <td height="50" bgcolor="#FFFF00"><div align="center">系統檢測到<strong> 當前表單變量數 </strong>超過 <strong>PHP允許最大表單變量數(<span id="ckmaxinputnum"></span>)</strong>。請修改PHP配置文件 php.ini 裡的 max_input_vars 參數。或者按表前綴搜索減少表再備份。</div></td>
+    </tr>
+	</table>
   <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
   <form name="ebakchangetb" method="post" action="phomebak.php" onsubmit="return check();">
     <tr class="header"> 
@@ -345,5 +350,17 @@ function check()
 	</form>
   </table>
 <br>
+<?php
+$ckmaxinputnum=Ebak_CheckFormVarNum($tablenum);
+if($ckmaxinputnum)
+{
+?>
+	<script>
+	document.getElementById("ckmaxinputnum").innerHTML="<font color=red><?=$ckmaxinputnum?></font>";
+	checkmaxinput.style.display="";
+	</script>
+<?php
+}
+?>
 </body>
 </html>

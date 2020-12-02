@@ -15,6 +15,11 @@ if(self!=top)
 	parent.location.href='index.php';
 }
 </script>
+<script>
+function ebakshowkey(){
+	document.getElementById("eshowkeyarea").innerHTML='<img src="ShowKey.php?'+Math.random()+'" name="KeyImg" id="KeyImg" align="bottom" onclick="ebakshowkey();" title="看不清楚,点击刷新">';
+}
+</script>
 </head>
 
 <body onload="document.form1.lusername.focus();">
@@ -24,7 +29,7 @@ if(self!=top)
       <td><div align="center"><a href="http://www.phome.net" target="_blank"><img src="images/logo.jpg" alt="Empire Soft" width="180" height="65" border="0"></a></div></td>
     </tr>
     <tr>
-      <td><div align="center"><strong><font size="5">欢迎使用&nbsp;EmpireBak&nbsp;v5.0</font></strong></div></td>
+      <td><div align="center"><strong><font size="5">欢迎使用开源、免费的&nbsp;EmpireBak&nbsp;v5.1</font></strong></div></td>
     </tr>
     <tr>
       
@@ -78,7 +83,7 @@ if(self!=top)
                 <tr> 
                   <td width="52"> <input name="key" type="text" id="key" size="6"> 
                   </td>
-                  <td><img src="ShowKey.php" align="bottom"></td>
+                  <td id="eshowkeyarea"><a href="#EmpireBak" onclick="ebakshowkey();">点击显示验证码</a></td>
                 </tr>
               </table></td>
           </tr>
@@ -94,9 +99,14 @@ if(self!=top)
           </tr>
         </form>
       </table>
+	  <table width="100%" border="0" cellspacing="1" cellpadding="3">
+          <tr>
+            <td height="75" valign="bottom"><div align="center"><a href="http://www.phome.net/ecms72/" title="最安全、最稳定的开源CMS" target="_blank"><img src="images/bannercms.gif" width="420" height="49" border=1></a></div></td>
+          </tr>
+        </table>
         <table width="420" border="0" align="center" cellpadding="3" cellspacing="1">
           <tr>
-            <td height="38"><div align="center">Powered by <a href="http://www.phome.net" target="_blank"><strong>EmpireBak</strong></a> <font color="#FF9900"><strong>5.0</strong></font> &copy; 2002-2016 <a href="http://www.digod.com" target="_blank">EmpireSoft</a> Inc.</div></td>
+            <td height="38"><div align="center">Powered by <a href="http://www.phome.net" target="_blank"><strong>EmpireBak</strong></a> <font color="#FF9900"><strong>5.1</strong></font> &copy; 2002-2017 <a href="http://www.digod.com" target="_blank">EmpireSoft</a> Inc.</div></td>
           </tr>
         </table></td>
     </tr>

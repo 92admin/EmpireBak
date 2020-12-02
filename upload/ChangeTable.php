@@ -6,6 +6,32 @@ $loginin=$lur['username'];
 $rnd=$lur['rnd'];
 $link=db_connect();
 $empire=new mysqlquery();
+
+//CheckFormVarNum
+function Ebak_CheckFormVarNum($tbnum){
+	if($tbnum<960)
+	{
+		return 0;
+	}
+	if(function_exists('ini_get'))
+	{
+		$val=@ini_get('max_input_vars');
+	}
+	else
+	{
+		$val=@get_cfg_var('max_input_vars');
+	}
+	if(!$val)
+	{
+		return 0;
+	}
+	if($val-$tbnum>40)
+	{
+		return 0;
+	}
+	return $val;
+}
+
 $mydbname=RepPostVar($_GET['mydbname']);
 if(empty($mydbname))
 {
@@ -14,7 +40,7 @@ if(empty($mydbname))
 //选择数据库
 $udb=$empire->query("use `".$mydbname."`");
 //存放目录
-$mypath=$mydbname."_".date("YmdHis");
+$mypath=$mydbname."_".date("YmdHis").make_password(6);
 if($phpsafemod)
 {
 	$mypath="safemod";
